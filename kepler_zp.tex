@@ -1,0 +1,765 @@
+
+%% Beginning of file 'sample63.tex'
+%%
+%% Modified 2019 June
+%%
+%% This is a sample manuscript marked up using the
+%% AASTeX v6.3 LaTeX 2e macros.
+%%
+%% AASTeX is now based on Alexey Vikhlinin's emulateapj.cls 
+%% (Copyright 2000-2015).  See the classfile for details.
+
+%% AASTeX requires revtex4-1.cls (http://publish.aps.org/revtex4/) and
+%% other external packages (latexsym, graphicx, amssymb, longtable, and epsf).
+%% All of these external packages should already be present in the modern TeX 
+%% distributions.  If not they can also be obtained at www.ctan.org.
+
+%% The first piece of markup in an AASTeX v6.x document is the \documentclass
+%% command. LaTeX will ignore any data that comes before this command. The 
+%% documentclass can take an optional argument to modify the output style.
+%% The command below calls the preprint style which will produce a tightly 
+%% typeset, one-column, single-spaced document.  It is the default and thus
+%% does not need to be explicitly stated.
+%%
+%%
+%% using aastex version 6.3
+\documentclass{aastex63}
+
+%% The default is a single spaced, 10 point font, single spaced article.
+%% There are 5 other style options available via an optional argument. They
+%% can be invoked like this:
+%%
+%% \documentclass[arguments]{aastex63}
+%% 
+%% where the layout options are:
+%%
+%%  twocolumn   : two text columns, 10 point font, single spaced article.
+%%                This is the most compact and represent the final published
+%%                derived PDF copy of the accepted manuscript from the publisher
+%%  manuscript  : one text column, 12 point font, double spaced article.
+%%  preprint    : one text column, 12 point font, single spaced article.  
+%%  preprint2   : two text columns, 12 point font, single spaced article.
+%%  modern      : a stylish, single text column, 12 point font, article with
+%% 		  wider left and right margins. This uses the Daniel
+%% 		  Foreman-Mackey and David Hogg design.
+%%  RNAAS       : Preferred style for Research Notes which are by design 
+%%                lacking an abstract and brief. DO NOT use \begin{abstract}
+%%                and \end{abstract} with this style.
+%%
+%% Note that you can submit to the AAS Journals in any of these 6 styles.
+%%
+%% There are other optional arguments one can invoke to allow other stylistic
+%% actions. The available options are:
+%%
+%%   astrosymb    : Loads Astrosymb font and define \astrocommands. 
+%%   tighten      : Makes baselineskip slightly smaller, only works with 
+%%                  the twocolumn substyle.
+%%   times        : uses times font instead of the default
+%%   linenumbers  : turn on lineno package.
+%%   trackchanges : required to see the revision mark up and print its output
+%%   longauthor   : Do not use the more compressed footnote style (default) for 
+%%                  the author/collaboration/affiliations. Instead print all
+%%                  affiliation information after each name. Creates a much 
+%%                  longer author list but may be desirable for short 
+%%                  author papers.
+%% twocolappendix : make 2 column appendix.
+%%   anonymous    : Do not show the authors, affiliations and acknowledgments 
+%%                  for dual anonymous review.
+%%
+%% these can be used in any combination, e.g.
+%%
+%% \documentclass[twocolumn,linenumbers,trackchanges]{aastex63}
+%%
+%% AASTeX v6.* now includes \hyperref support. While we have built in specific
+%% defaults into the classfile you can manually override them with the
+%% \hypersetup command. For example,
+%%
+%% \hypersetup{linkcolor=red,citecolor=green,filecolor=cyan,urlcolor=magenta}
+%%
+%% will change the color of the internal links to red, the links to the
+%% bibliography to green, the file links to cyan, and the external links to
+%% magenta. Additional information on \hyperref options can be found here:
+%% https://www.tug.org/applications/hyperref/manual.html#x1-40003
+%%
+%% Note that in v6.3 "bookmarks" has been changed to "true" in hyperref
+%% to improve the accessibility of the compiled pdf file.
+%%
+%% If you want to create your own macros, you can do so
+%% using \newcommand. Your macros should appear before
+%% the \begin{document} command.
+%%
+\newcommand{\vdag}{(v)^\dagger}
+\newcommand\aastex{AAS\TeX}
+\newcommand\latex{La\TeX}
+\newcommand{\rr}[1]{{\bf \color{purple}{#1}}}
+
+%% Reintroduced the \received and \accepted commands from AASTeX v5.2
+\received{June 1, 2019}
+\revised{January 10, 2019}
+\accepted{\today}
+%% Command to document which AAS Journal the manuscript was submitted to.
+%% Adds "Submitted to " the argument.
+\submitjournal{AJ}
+\usepackage{amsmath}
+%% For manuscript that include authors in collaborations, AASTeX v6.3
+%% builds on the \collaboration command to allow greater freedom to 
+%% keep the traditional author+affiliation information but only show
+%% subsets. The \collaboration command now must appear AFTER the group
+%% of authors in the collaboration and it takes TWO arguments. The last
+%% is still the collaboration identifier. The text given in this
+%% argument is what will be shown in the manuscript. The first argument
+%% is the number of author above the \collaboration command to show with
+%% the collaboration text. If there are authors that are not part of any
+%% collaboration the \nocollaboration command is used. This command takes
+%% one argument which is also the number of authors above to show. A
+%% dashed line is shown to indicate no collaboration. This example manuscript
+%% shows how these commands work to display specific set of authors 
+%% on the front page.
+%%
+%% For manuscript without any need to use \collaboration the 
+%% \AuthorCollaborationLimit command from v6.2 can still be used to 
+%% show a subset of authors.
+%
+%\AuthorCollaborationLimit=2
+%
+%% will only show Schwarz & Muench on the front page of the manuscript
+%% (assuming the \collaboration and \nocollaboration commands are
+%% commented out).
+%%
+%% Note that all of the author will be shown in the published article.
+%% This feature is meant to be used prior to acceptance to make the
+%% front end of a long author article more manageable. Please do not use
+%% this functionality for manuscripts with less than 20 authors. Conversely,
+%% please do use this when the number of authors exceeds 40.
+%%
+%% Use \allauthors at the manuscript end to show the full author list.
+%% This command should only be used with \AuthorCollaborationLimit is used.
+
+%% The following command can be used to set the latex table counters.  It
+%% is needed in this document because it uses a mix of latex tabular and
+%% AASTeX deluxetables.  In general it should not be needed.
+%\setcounter{table}{1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% The following section outlines numerous optional output that
+%% can be displayed in the front matter or as running meta-data.
+%%
+%% If you wish, you may supply running head information, although
+%% this information may be modified by the editorial offices.
+\shorttitle{Kepler calibration}
+\shortauthors{Ridden-Harper et al.}
+%%
+%% You can add a light gray and diagonal water-mark to the first page 
+%% with this command:
+%% \watermark{text}
+%% where "text", e.g. DRAFT, is the text to appear.  If the text is 
+%% long you can control the water-mark size with:
+%% \setwatermarkfontsize{dimension}
+%% where dimension is any recognized LaTeX dimension, e.g. pt, in, etc.
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\graphicspath{{./}{figs/}}
+%% This is the end of the preamble.  Indicate the beginning of the
+%% manuscript itself with \begin{document}.
+
+\begin{document}
+
+\title{Calibrating the Kepler Space Telescope photometry}
+
+%% LaTeX will automatically break titles if they run longer than
+%% one line. However, you may use \\ to force a line break if
+%% you desire. In v6.3 you can include a footnote in the title.
+
+%% A significant change from earlier AASTEX versions is in the structure for 
+%% calling author and affiliations. The change was necessary to implement 
+%% auto-indexing of affiliations which prior was a manual process that could 
+%% easily be tedious in large author manuscripts.
+%%
+%% The \author command is the same as before except it now takes an optional
+%% argument which is the 16 digit ORCID. The syntax is:
+%% \author[xxxx-xxxx-xxxx-xxxx]{Author Name}
+%%
+%% This will hyperlink the author name to the author's ORCID page. Note that
+%% during compilation, LaTeX will do some limited checking of the format of
+%% the ID to make sure it is valid. If the "orcid-ID.png" image file is 
+%% present or in the LaTeX pathway, the OrcID icon will appear next to
+%% the authors name.
+%%
+%% Use \affiliation for affiliation information. The old \affil is now aliased
+%% to \affiliation. AASTeX v6.3 will automatically index these in the header.
+%% When a duplicate is found its index will be the same as its previous entry.
+%%
+%% Note that \altaffilmark and \altaffiltext have been removed and thus 
+%% can not be used to document secondary affiliations. If they are used latex
+%% will issue a specific error message and quit. Please use multiple 
+%% \affiliation calls for to document more than one affiliation.
+%%
+%% The new \altaffiliation can be used to indicate some secondary information
+%% such as fellowships. This command produces a non-numeric footnote that is
+%% set away from the numeric \affiliation footnotes.  NOTE that if an
+%% \altaffiliation command is used it must come BEFORE the \affiliation call,
+%% right after the \author command, in order to place the footnotes in
+%% the proper location.
+%%
+%% Use \email to set provide email addresses. Each \email will appear on its
+%% own line so you can put multiple email address in one \email call. A new
+%% \correspondingauthor command is available in V6.3 to identify the
+%% corresponding author of the manuscript. It is the author's responsibility
+%% to make sure this name is also in the author list.
+%%
+%% While authors can be grouped inside the same \author and \affiliation
+%% commands it is better to have a single author for each. This allows for
+%% one to exploit all the new benefits and should make book-keeping easier.
+%%
+%% If done correctly the peer review system will be able to
+%% automatically put the author and affiliation information from the manuscript
+%% and save the corresponding author the trouble of entering it by hand.
+
+\correspondingauthor{Ryan Ridden-Harper}
+\email{rridden@stsci.edu}
+
+\author[0000-0002-0786-7307]{Ryan Ridden-Harper}
+\affiliation{Space Telescope Science Institute \\}
+
+\author{Armin Rest}
+\affiliation{Space Telescope Science Institute \\}
+
+\author{Gautham Narayan}
+\affiliation{Test}
+
+
+\nocollaboration{2}
+
+%% Note that the \and command from previous versions of AASTeX is now
+%% depreciated in this version as it is no longer necessary. AASTeX 
+%% automatically takes care of all commas and "and"s between authors names.
+
+%% AASTeX 6.3 has the new \collaboration and \nocollaboration commands to
+%% provide the collaboration status of a group of authors. These commands 
+%% can be used either before or after the list of corresponding authors. The
+%% argument for \collaboration is the collaboration identifier. Authors are
+%% encouraged to surround collaboration identifiers with ()s. The 
+%% \nocollaboration command takes no argument and exists to indicate that
+%% the nearby authors are not part of surrounding collaborations.
+
+%% Mark off the abstract in the ``abstract'' environment. 
+\begin{abstract}
+
+Over the 4 years of the Kepler/K2 mission, the Kepler Space Telescope provided incredible insights into many aspects of astronomy. While the high cadence observations of Kepler were invaluable to many phenomena, the broadband filter made converting instrumental counts to a physical unit, like AB magnitude challenging. Here we take a data driven approach to calibrating the Kepler/K2 photometry against the well-calibrated PanSTARRS photometry. We explore two methods with Stellar Locus Regression, and predicting Kepler magnitudes with a composite of PS1 photometry. We find these two methods are consistent with the existing Kepler magnitudes presented in the Ecliptic Plane Catalogue, however, when all three are compared to SDSS spectra, we find the composite method is highly consistent, with a difference of $5^{+7}_{-8}$~mmag for sources with $g-r <1$. We present zeropoints calculated with the composite method, compare them to past values, and analyse focal plane and temporal trends across the detector and campaigns.
+
+
+\end{abstract}
+
+%% Keywords should appear after the \end{abstract} command. 
+%% See the online documentation for the full list of available subject
+%% keywords and the rules for their use.
+\keywords{editorials, notices --- 
+miscellaneous --- catalogs --- surveys}
+
+%% From the front matter, we move on to the body of the paper.
+%% Sections are demarcated by \section and \subsection, respectively.
+%% Observe the use of the LaTeX \label
+%% command after the \subsection to give a symbolic KEY to the
+%% subsection for cross-referencing in a \ref command.
+%% You can use LaTeX's \ref and \label commands to keep track of
+%% cross-references to sections, equations, tables, and figures.
+%% That way, if you change the order of any elements, LaTeX will
+%% automatically renumber them.
+%%
+%% We recommend that authors also use the natbib \citep
+%% and \citet commands to identify citations.  The citations are
+%% tied to the reference list via symbolic KEYs. The KEY corresponds
+%% to the KEY in the \bibitem in the reference list below. 
+
+\section{Overview}
+\begin{enumerate}
+    \item Intro
+    \item synthetic magnitude 
+    \begin{enumerate}
+        \item explain how they are calculated
+        \item Compare to observed PS1 magnitude 
+    \end{enumerate}
+    \item Methods
+    \begin{enumerate}
+        \item SLR method, calculation of redenning and comparison to Schlafley
+        \item Composite method, test by predicting r from g,i,z for test
+    \end{enumerate}
+    \item Detailed impact of redenning
+    \begin{enumerate}
+        \item where the SLR fails, complex structure 
+        \item test dereddening PS1, making Kep then reddening 
+        \item test for low medium and high fields 
+    \end{enumerate}
+    \item Difference between two methods $\longrightarrow$ consistent 
+    \item EPIC comparison
+    \begin{enumerate}
+        \item Show they are broadly consistent 
+        \item Show that the spread of EPIC is larger than our methods in the scatter of instrumental - mag 
+        \item correlation is likely the result of our methods and EPIC having different basis (PS1 vs SDSS)
+    \end{enumerate}
+    \item SDSS spectra
+    \begin{enumerate}
+        \item compare snythmags to all mag methods 
+        \item is the offset the same between our methods and SDSS spectra and photometry?
+    \end{enumerate}
+    \item Source catalogue 
+    \begin{enumerate}
+        \item Define a list of ideal sources which we calibrate from (sources that survive all cuts)
+        \item everest zeropoints for kepler, see if can put the zps in the Kepler headers
+        \item blah
+    \end{enumerate}
+    \item Products/analysis
+\end{enumerate}
+
+
+
+\section{Introduction} \label{sec:intro}
+Calibrating Kepler photometry to a physical system is key to accurate and reliable joint analysis with other telescopes and photometric systems. The broadband filter and large field of view make calibrating Kepler challenging. Previous studies have calculated bespoke zeropoints for individual targets using SEDs (eg 18oh), however since the entire Kepler fov is comprised of 84 individual channels, a zeropoint for one object does not necessarily apply to another. Likewise, different reduction methods will produce different lightcurves, with different normalisation. In this analysis we seek to provide a method to calibrate the Kepler photometry for each channel, by comparing against PS1 photometry and synthetic photometry produced by stellar SEDs. 
+
+\begin{deluxetable*}{ll}
+\tablecaption{Magnitude definitions. \label{tab:legend}}
+\tablecolumns{2}
+\tablehead{
+type & variable
+}
+\startdata
+PS1 observed & $m_{obs}$ \\
+Kepler system magnitude & $Kp_{sys}$\\
+Kepler EPIC magnitude & $Kp_{epic}$\\
+Stellar locus regression (SLR) & $Kp_{slr}$ \\
+Linear combination (Com) & $Kp_{com}$\\
+PS1 synthetic CALSPEC  & $m_{cal}$ \\
+Kepler synthetic CALSPEC  & $Kp_{cal}$ \\
+PS1 SDSS synthetic spectra & $m_{sdss}$ \\
+Kepler SDSS synthetic spectra & $Kp_{sdss}$
+\enddata
+\end{deluxetable*}
+
+
+\section{Data}
+
+\subsection{Kepler/K2}
+
+
+The \textit{Kepler Space Telescope} provided unparalleled 30 minute cadence observations on numerous targets across the ecliptic throughout the K2 campaigns. Due to memory constraints Kepler targets were pre-selected and recorded as small cutouts of the entire detector, known as Target Pixel Files (TPFs). From the TPFs higher level science products, such as light curves have been calculated for many sources, both of which are available on MAST {ref}.
+
+Data from the K2 mission was marred by instabilities in spacecraft pointing, where targets would regularly drift 1~pixel (4\arcsec). This instability made obtaining reliable photometry of sources challenging. As discussed in \rr{ref} the Everest pipeline was developed to correct K2 data and provide high precision lightcurves of stars. Everest light curves are provided on MAST as high level science products, which we use for the basis of the Kepler photometry in this analysis.
+
+All K2 targets are listed in the Ecliptic Plane Catalogue with estimated magnitudes in the Kepler bandpass \rr{ref}. \rr{cite self} used these magnitudes alongside Everest lightcurves to define zeropoints for each channel of the Kepler detector. This simple analysis indicated that each channel had a distinct zeropoint. We expand on this work to account for its limitations and define robust zeropoints for the Kepler/K2 channels.
+
+
+
+\subsection{PanSTARRS (PS1)}
+general PS1 stuff and DR2
+
+\subsection{Gaia}
+
+\subsection{Calspec}
+Calspec
+
+\subsection{SDSS spectra}
+SDSS spec and the API used to get the data
+
+
+\subsection{Preliminary source selection}
+For this analysis we are only interested in stars with high precision photometry from Kepler and PS1. To verify the Kepler target sample are stars we check that the comparison of PS1 PSF and Kron magnitudes satisfy the PS1 stellar cut where $(m_{PSF} - m_{Kron}) < 0.05$. Following this cut, we also perform an error cut on the sample, requiring the PS1 PSF photometry error to be $<0.1$~mag in all bands. 
+
+Another consideration is that with the course resolution of Kepler, sources with separations $\lesssim8\arcsec$ will be blended in the Kepler photometry. To limit the effects of contamination we impose conditions for isolation. For each source, we find all PS1 sources within a $8\arcsec$ radius and sum the flux, to mimic the resolution of Kepler photometry. If the magnitude of the summed flux $(m_{sum})$ is brighter than the single object magnitude $(m)$ by 0.1 magnitude $(\left|m_{sum}-m\right| \geq0.1)$, then the star is rejected from the sample.
+
+With these cuts we form a sample of relatively isolated stars observed in K2 with precision photometry. 
+
+\section{Method} \label{sec:method}
+
+Since calibration of broadband filters can be challenging and potentially unreliable, we use two independent methods to determine the Kepler zeropoints. A commonality shared between all methods is that they rely on synthetic photometry of the Calspec spectral library and are based on the PS1 photometry. The two methods are:
+\begin{enumerate}
+    \item Stellar Locus Regression (SLR)
+    \item Linear combination of PS1 photometry (Com)
+\end{enumerate}
+
+In this section we break down our two independent calibration methods 
+
+\subsection{Synthetic photometry} \label{sec:synphot}
+\rr{maybe move this to the PS1 error paper?}
+The calibration method we present in this paper, is built on comparing synthetic photometry to observed photometry. Given any bandpass and SED, it is possible to calculate the expected, or synthetic magnitude of the SED as observed through a bandpass. If the SED and bandpass are correct then, the synthetic magnitude should be a close match to the observed magnitude, with any offsets being products of effects unaccounted for in the SED, like dust extinction, or incorrect instrumental calibration. 
+
+To reliably calculate synthetic photometry we developed \texttt{source-synphot}, which builds upon \texttt{pysynphot} to calculate synthetic photometry for any bandpass and SED. To test the accuracy of this method for calculating synthetic photometry, we compare the PS1 observed magnitudes of Gautham's WDs to those calculated by source-synphot and the PS1 bandpasses available on SVO.
+
+By comparing to the ideal WD SEDs we can calibrate the observed PS1 photometry to the synthetic photometry. Although there is some scater in the difference between the two measurements, as seen in Fig.~\ref{fig:wd}, the distributions of both the g and r bands are centred closely to 0, therefore we consider them to be consistent. On the other hand both the i and z band distributions feature a significant $(\sim 0.01-0.02)$ offset. To account for this discrepancy between the observed and synthetic i and z band measurements, we subtract the respective medians from the observed magnitudes. 
+%So the observed magnitudes are corrected according to $m_i = m_i - 0.012$, and $m_z = m_z - 0.017$.
+
+\begin{figure}
+\plotone{WD_synthmag_psf.pdf}
+\caption{Difference between the observed PS1 magnitudes of WDs with the synthetic magnitudes. Although both g and r have some spread, both the mean and median are close to zero. Interestingly the i and z bands feature a significant offset with medians of 0.12, and 0.017, respectively. The large offset present in these bands is corrected by subtracting the median offsets from observed magnitudes in the two bands (we should talk about this). \textbf{need to make look nice}  \label{fig:wd}}
+\end{figure}
+
+Although the WD SEDs provide an excellent test to calibrate the synthetic photometry to PS1 observations, they can not be used to calibrate Kepler (check if any were observed by kepler). To use synthetic photometry to calibrate kepler, we need to use SEDs that fall on the stellar locus. There are many stellar models that could be used in this method, however, from tests we found that the ESO pickles library and ck models featured colour dependant offsets between the synthetic stellar locus and an observed stellar locus in a low extinction field. 
+
+To generate a stellar locus, we follow the approach of Tonry and use the Calspec library. In this approach we calculate the synthetic magnitude in all PS1 bandpasses, alongside Kepler. For any colour comparison, we can then fit a spline to the data to give us the synthetic stellar locus without extinction. 
+
+\subsection{Stellar Locus Regression}
+
+Our first photometric calibration method is built on the principle of stellar locus regression as described in (ref). This method relies on the phenomena where main sequence stars lie along characteristic curves in colour-colour space, as seen in Fig.~\ref{fig:av_fit}, known as stellar loci. Changes in the photometric conditions result in stars shifting relative to the expected stellar locus.
+
+Colour dependent shifts, such as reddening caused by dust extinction act to shift the sources along the stellar locus. Alternatively overall shifts in the calibration of photometric systems will shift the entire stellar locus according to the calibration differences. In this way fitting an observed stellar locus to an ideal, or synthetic stellar locus can be used to identify, and correct for reddening, and calibrate photometric systems. 
+
+We generate our stellar locus using source-synphot and the CALSPEC library. We assume the synthetic stellar locus is a reliable representation of the observed stellar locus in PS1, after correcting for the offsets discussed in \S~\ref{sec:synpohot}. As explained in (ref) to fit the observed stellar locus to the synthetic locus, we calculate the minimum distance from all sources to the synthetic stellar locus, weighted by the error projected in the direction orthogonal to the stellar locus. Using the scipy minimise routine, we can then fit the offsets from an observed stellar locus to the synthetic locus. These offsets can then be interpreted as the reddening parameter and the photometric calibration offsets.
+
+
+\subsubsection{Extinction}
+Calibrating sources close to the galactic plane introduces the added complexity of high levels of dust extinction, or reddening of sources. The reddening, $A$, changes the observed magnitude, $m$, in a band according to
+\begin{eqnarray}
+m = m_{int} + A
+\end{eqnarray}
+where $m_{int}$ is the intrinsic magnitude. The reddening in a band $x$ can also be represented as
+\begin{eqnarray}
+A_x = E(B-V)R_x
+\end{eqnarray}
+where $E(B-V)$ is the conventional extinction determined in the $B$ and $V$ bands, and $R_x$ is the extinction vector coefficient for a band.
+
+There are numerous methods for identifying extinction in a field, and in this work we consider two methods for determining extinction. The first method is data driven, using stellar locus regression on PS1 photometry, and the second utilises the 3D dust maps produced by Bayestar19 (B19 hereafter) (refs). 
+
+Before calculating extinctions for Kepler fields, we must fix a basis of extinction vector coefficients. We choose the normalisation of B19 to be our basis of extinction, so $A=B19R$. Schlafly 2011 presents a table of band coefficients for a range of filters, such as the PS1 $grizy$ which are compatible with the B19 output. To calculate how these coefficients apply to our Calspec basis and Kepler band we first calculate a conversion between between B19 and the conventional $E(B-V)$ by assuming that they are related by a constant such that $E(B-V)=\xi B19$ under the Fitzpatrick 99 extinction law. We calculate this constant by choosing HD074000 as representative Calspec spectrum, which has a spectral type of sdF6, $T_{eff}=7000$~K, and $g-r=-0.05$. 
+
+We fit the constant by calculating the synthetic $grizy$ magnitudes of HD074000 under no extinction and with $B19=1$. We apply the extinction to the spectrum using the \texttt{extinction} python package and the fitzpatrick99 model. With this setup the extinction vector coefficient is given by $R_x=m_e-m_0$. We then minimise the reduced $\Chi^2$ across all bands with the \texttt{scipy} optimize package using the Nedler-Mead method. From the fit we find $\xi = 1.02$, which has differences of only a few percent in each band \textbf{need to quantify}. 
+
+With the conversion from $B19$ to $E(B-V)$ we can calculate $R$ for each band, however, $R$ varies with spectral type. If instead of choosing a representative spectrum we calculate $R_x$ for all Calspec sources with $g-r < 1$ we find a strong linear trend with colour in bands covering shorter wavelengths. We fit these trends with using the \texttt{scipy} curvefit module iterating the fit twice following $3\sigma$ clips on the data. The fits are shown in Fig.~\ref{fig:R_fits} where the extinction vector coeficients for PS1 $grizy$ and $Kepler$ are now functions of intrinsic colour defined by:
+\begin{eqnarray} 
+R_g=3.629-0.131(g-r)_{int},\label{eqn:vectors}\\
+R_r=2.611-0.053(g-r)_{int},\nonumber \\
+R_i=1.935-0.021(g-r)_{int},\nonumber\\
+R_z=1.525-0.008(g-r)_{int},\nonumber\\
+R_y=1.274-0.006(g-r)_{int},\nonumber\\
+R_{Kp}=2.557-0.395(g-r)_{int}.\nonumber
+\end{eqnarray}
+For simplicity we take the fiducial value $R_{x,0}$ to be $R_x$ evaluated at $(g-r)_{int}=0$. Although $R_x$ now depends on the intrinsic colour strictly making extinction correction a recursive process, since these sources are on the stellar locus, extinction acts primarily to shift sources along $g-r$, so the intrinsic colour can be sufficiently approximated by $(g-r)_int\approx B19(g-r)$. Overall, since the extinction is small, this colour correction to $R_x$ is negligible. With this fixed basis of extinction vector coefficients we can now explore the extinction present in the \textit{Kepler/K2} fields.
+
+
+
+
+With a synthetic stellar locus and PS1 photometry, we can calculate the extinction through stellar locus regression. Since the effects of reddening can be degenerate with instrumental calibration, before calibrating the target photometric system, we first identify the dust extinction present in the field. For this we assume that the PS1 photometry is well calibrated, so any differences between the observed and synthetic stellar loci are the product of dust extinction. 
+
+Dust extinction is wavelength dependant, so it effects all bandpasses differently. To obtain a single extinction value, we use the Bayestar19 extinction coefficients, $R$, for the PS1 filters. These parameters shown in Table~\ref{tab:ext_coeff} correspond to an extinction $E(g-r)$, instead of the conventional $E(B-V)$, which are related by 
+\begin{equation}
+    E(B-V) =0.981 E(g-r).
+\end{equation}
+
+We found that this conversion was offset by $\sim$0.1 magnitudes for an extinction of $E(B-V)=1$, for our synthetic PS1 photometry. To correct for this offset, we determined a new conversion parameters. This parameter was calculated by minimising the difference between the synthetic photometry of all PS1 filters of Calspec spectra reddened by $E(B-V)=0$, and $E(B-V)=1$ according to the Fitzpatrick 1999 relation. For our Calspec synthetic photometry, we find conversion factor to be 1.029, giving the following relation
+\begin{equation}
+    E(B-V) =1.029 E(g-r).
+\end{equation}
+
+Schafly 2011 presents the extinction coefficients for the PS1 filters, but not for Kepler. We determine the extinction coefficient for Kepler to be 2.431, by taking the average of the magnitude differences between CALSPEC spectra at $E(B-V)=0$, and $E(B-V)=1$. Likewise, we calculate the extinction coefficient for TESS to be 1.809. The $E(g-r)$ extinction coefficients for Kepler and TESS are also shown in Table~\ref{tab:ext_coeff}.
+
+\begin{deluxetable*}{ccccccc}
+\tablecaption{Extinction vector coefficients $R$  for the PS1 $grizy$ and $Kepler$ bands. Here we show the Schlafly 2011 coefficients and our recalculated evaluated at $(g-r)_{int}=0$ with the error in the last value in brackets. Although there is a discrepancy between the values, another choice of $(g-r)_{int}$ brings the values into closer alignment according to Eqs~\ref{eqn:vectors}}
+\tablecolumns{7}
+\tablehead{
+&\colhead{g} & \colhead{r} & \colhead{i} & 
+\colhead{z} & \colhead{y} & \colhead{\textit{Kepler}} }
+\startdata
+Schlafly 2011 & 3.518 & 2.617 & 1.971 & 1.549 & 1.263 & $-$ \\
+$R_{x,0}$ (this work) & $3.629(2)$ & $2.611(1)$ & $1.935(1)$ & $1.523(2)$ & $1.274(1)$ & $2.557(9)$
+\enddata
+\end{deluxetable*}
+
+
+With extinction coefficients in each band, we can calculate the extinction present in a field, by fitting the extinction $E(g-r)$. We calculate the extinction with the PS1 observations through stellar locus regression in the g-i and g-r plane. To be effective this method requires a large sample size over a wide range of colour, so we require at least 10 sources to perform the fit. An example of this fit for a high extinction field is shown in Fig.~\ref{fig:av_fit}, where we find $B19 = 0.18$ for Kepler/K2 C02, channel 67.
+
+\begin{figure}
+\plotone{R_all_fits.pdf}
+\caption{Colour vector coefficients $R$ for the PS1 $grizy$ and $Kepler$ bands. Although $R$ varies with spectral type across the Calspec sources with $(g-r)_{int} < 1$ we find that the variation is largely linear. For simplicity we take $R$ evaluated at ${(g-r)_{int} =0}$ to be the primary value for each band, where the full corrected value is given by the displayed equations. For red bands there is little change across the colour range, however, bands with blue components like PS1 $g$ and $Kepler$ show significant change. \label{fig:R_fits}}
+\end{figure}
+
+\begin{figure}
+\plotone{av_fit_example.pdf}
+\caption{Stellar locus fit to PS1 photometry for C02 channel 67. The synthetic Calspec stellar locus is shown as the black line, with the observed PS1 photometry shown in blue points and the de-reddened PS1 photometry are the orange stars. \label{fig:av_fit}}
+\end{figure}
+
+Alongside fitting for $E(g-r)$, we use this first stellar regression to cut sources. We make a $3\sigma$ cut  on the residuals of the regression and and further remove points with errors $>0.1$~mags. After removing these outliers from the data, we then recalculate $E(g-r)$.
+
+
+The wide field of view (FoV) of Kepler/K2, means that a single reddening value will be insufficient to represent the entire detector. To limit systematic errors introduced by dust structures, we calculate $E(g-r)$ for each channel of the Kepler detector. In the extreme case of C02, there is substantial dust structure, that is under-sampled by Kepler/K2 sources, as seen in in Fig.~\ref{fig:ext_dist}. Although the SLR derived reddening is clearly under-sampled, each channel is well fit by the synthetic stellar locus and are broadly consistent with the Bayestar 2019 dustmap reddening values evaluated at each source (probably need a figure or number here. Kind of tricky since dustmap depends on the distance to the source. Maybe do median +- lower and upper values). A list of all $E(g-r)$ values for each channel in each campaign is shown in Table (to be added to the appendix).
+
+\begin{figure}
+%\plottwo{C2_extinction.pdf}{C2_extinction_fp.pdf}
+\plotone{dustmap_slr.pdf}
+%\caption{Kepler/K2 C02 $a_v$ values per channel. \textbf{Left:} The distribution of $a_v$ is clearly non-Gaussian showing that a single $a_v$ value per campaign would be ineffective. \textbf{Right:} The $a_v$ values aligned with the Kepler focalplane clearly shows the variable structure observed in C02. Channels that had less than 10 stars are excluded from the analysis.  \label{fig:ext_dist}}
+\caption{Extinction in the Kepler/K2 C02 field. \textbf{Left:} Bayestar 2019 dustmap of the C02 field. \textbf{Right:} Extinction of the Kepler/K2 sources. It is clear that calculating the extinction per channel under-samples the underlying dust structure, however, this method provides a consistent system in which the extinction is calculated using the existing data, and most campaigns have negligible dust structure. In most cases we find that the SLR determined $E(g-r)$ is consistent with that from Bayestar 2019. Comparison figures for all Kepler/K2 campaigns can be seen at (link to github folder) \label{fig:ext_dist}}
+\end{figure}
+
+
+\subsubsection{Fitting zeropoint}
+
+The zeropoint fitting follows the same stellar regression process as that used to determine the dust extinction. In this case the dust extinction is corrected for all passbands, ideally leaving only instrumental calibration responsible for differences between the observed and synthetic stellar loci. In this case we assume that the PS1 magnitudes are well calibrated to the synthetic stellar locus and only fit an offset to the band of interest to provide a calibration to chosen bandpass, leveraging on the precise photometric calibration of PS1. 
+
+
+In this case we apply restriction on the allowable colour space, to ensure that only a well-behaved region of the stellar locus is fit. The region of choice is $0.3 \leq (g-r)\leq 0.8$, which avoids complications that arise from both extreme blue and red sources. We then simultaneously fit the target bandpass with a range of PS1 filters, that overlap with the target bandpass. For the broadband Kepler bandpass, we simultaneously fit in the colour planes defined by $(g-r)$, and ($(g-Kp)$, $(Kp-r)$, $(Kp-i)$), which covers the Kepler bandpass. 
+
+The offset calculated from fitting the stellar loci, calibrates the observed photometry to the synthetic photometry. In the case of Kepler we compare the instrumental magnitude, determined by:
+\begin{equation}
+    Kp_{sys} = -2.5log(C),
+\end{equation}
+where $C$ is the median counts of sources determined by the Everest reduction pipeline. As we compare the Kepler instrumental magnitude to the synthetic magnitude, the offset between the observed, and model stellar loci is the zeropoint. This zeropoint converts Kepler counts to the AB magnitude system.
+
+The intrinsic variability of stars creates an intrinsic scatter around the stellar locus. To achieve a high precision in the zeropoint, ideally many sources are required within the allowed colour range, however, this is not possible for many channels. Although Kepler observed many sources throughout K2, some channels in each campaign have too few sources to meet our criteria. 
+
+Alongside fitting the Kepler zeropoint, we also independently fit the unused $z$ PS1 bandpass through the same process as for the Kepler bandpass. In this case we simultaneously fit the colour planes defined by (g-r), and ((g-z), (r-z), (i-z)). Since we assume PS1 magnitudes are well callibrated, and offsets to the known magnitudes of $z$ band can act as an indicator of the systematic error present in the SLR method. Example fits for both $Kp$ and $z$ are shown in Fig.~\ref{fig:slr_fit}. As expected, channels with many high quality sources have small systematic errors $(\Delta z \approx 0.001)$, conversely channels with few sources have large systematic errors $(\Delta z \approx 0.1)$.
+
+
+Although the SLR method provides a clear way to deriving reddening and Kepler/K2 zeropoints for a given sample, we imposed heavy restriction on the sources. From our restrictions we are limited to a colour range of $0.3 \leq (g-r)\leq 0.8$, which prevents us from calculating zeropoints for some channels. Although this is not ideal, there are enough suitable sources throughout all the campaigns that each channel have at least one zeropoint calculated. We explore the possibility that these zeropoints change over time due to detector degradation in \S~\ref{sec:time_evo}.
+
+\begin{figure}
+    \plottwo{k_fit_ch26}{k_fit_ch26_residual}
+    \plottwo{z_fit_ch26}{z_fit_ch26_residual}
+    \caption{Stellar Locus Regression (SLR) zeropoint fit for channel 26 during C16. \textbf{Left:} Fits to $Kp_{sys}$ (top) and $z$ (bottom), the observed colours are in blue, with the Calspec colour spline shown in orange. \textbf{Right:} residuals of the SLR for $Kp$ (top) and $z$ (bottom). \textbf{I'll make these nice!}}
+    \label{fig:slr_fit}
+\end{figure}
+
+
+
+
+
+
+\subsection{Composite Kepler magnitude with PS1} \label{sec:composite}
+
+A second independent method we explore is to construct Kepler magnitudes from PS1 observations. By leveraging the precision PS1 photometry, that covers the Kepler bandpass with the $g$, $r$, $i$, and $z$ bands, we can calculate an expected composite Kepler magnitude, $Kp_{com}$, for each source and therefore zeropoints by comparing against the systematic magnitude, $Kp_{sys}$. This method alongside SDSS photometric observations forms the basis of the EPIC catalogue magnitudes for K2 sources. As shown in \rr{REF} the EPIC Kepler magnitude, $Kp_{epic}$, is defined by the following conditional relation:
+\begin{eqnarray}
+Kp_{epic} = \begin{cases}
+0.2g + 0.8r, & \text{if } (g-r) \leq 0.8\\
+0.1g + 0.9r, & \text{if } (g-r) > 0.8,
+\end{cases}
+\label{eqn:epic}
+\end{eqnarray}
+where $g$ and $r$ are the SDSS g and r band magnitudes respectively. For our method instead of calibrating to SDSS photometry we calibrate to PS1 photometry across a broad colour range. We take the bands that cover the entire Kepler coverage, which includes $g$, $r$, $i$, and $z$, and assert that a linear combination of these bands can mimic the Kepler band. We also include a nonlinear colour correction term $(\rm g-i)$ to account for any residual colour dependencies. To find the coefficients we calculate the synthetic magnitude in PS1 griz and Kepler bands for Calspec sources with $(g-r) <1$, also excluding the NGC6681 sources. We convert these magnitudes to flux using the PS1 image zeropoint of 25 and find the coefficients that minimise the difference between the Calspec Kepler flux and the linear PS1 combination flux for all Calspec sources. With a zeropoint of 25 the Kepler flux, $f_{Kp}$, can be represented by
+%\textbf{OLD VERSION}
+%\begin{eqnarray}
+%f_K = 0.375f_g + 0.376f_r + 0.191f_i + 0.059f_z - 0.084(f_g-f_r)
+%\end{eqnarray}
+%\textbf{NEW VERSION}
+\begin{eqnarray}
+f_{Kp} = \left(0.259f_g + 0.499f_r + 0.179f_i + 0.064f_z\right) \left(\frac{f_g}{f_i}\right)^{0.019}
+\end{eqnarray}
+
+where $f_{g,r,i,z}$ are the fluxes in each of the PS1 bandpassses. We find that $Kp_{com}$ gives an excellent approximation of $Kp$, with $Kp_{cal}-Kp_{com} = 0^{+0.7}_{-0.9}$~mmag, as seen in Fig.~\ref{fig:com_residuals} (Left). This relation covers stellar sources within the colour range of $-0.5\leq (g-r)\leq 1$. 
+
+To test the validity of the composite method we construct the PS1 $r$ band flux ($f_r$) using flux in the g,i, and z band to get the following
+\begin{eqnarray}
+f_r = \left(0.052f_g + f_i\right)\left(\frac{f_g}{f_i} \right)^{0.313}.
+\label{eqn:red}
+\end{eqnarray}
+The residuals of this fit are shown in Fig.~\ref{fig:com_residuals} (Right). Although there is no overlap between the bands used to model the $r$ band, we still are able to produce an accurate construction. To test if this composite magnitude is reliable, we compare it to all stars observed in Kepler/K2. As seen in Fig.~\ref{fig:robs_vs_rcom}. We find a tight constrain of $r_{cal}-r_{com} = 0^{+16}_{-10}$~mmag for all sources, however, when also comparing the high extinction C04 field to the low extinction C16 field, we find a small offset between the two distributions. To see if the offset is a result of extinction, we recalculate Equation~\ref{eqn:red} after reddening the Calspec spectral library by $a_v=3.1$, according to the Fitzpatrick 199(?) relation. We find no significant change to parameters from this reddening, suggesting that the flux construction is robust to reddening, at least for the Calspec spectral library.
+
+Since all Kepler/K2 sources are covered by PS1, this method is applicable to all sources stellar sources with $(g-r)<1$. Unlike the SLR method, this method can be used on and individual or small groups of targets, since it does not rely on group statistics. Conversely it does not directly provide an estimate of the dust extinction present in each field like the SLR method, so the two methods offer complementary strategies.
+
+
+
+\begin{figure}
+\plottwo{PS1_com_kep_res}{PS1_com_r_res}
+\caption{Magnitude residuals of the Calspec magnitudes created through linear combinations of independent filters \textbf{Left:} Kepler; \textbf{Right:} PS1 r band. We find this linear combination method gives well constrained magnitudes, unsirprisingly the test $r$ band case has a higher spread since there is no overlap between the bands used to construct $r_{com}$ and $r$. \label{fig:com_residuals}}
+\end{figure}
+
+\begin{figure}
+    \plotone{robs-rcom}
+    \caption{Difference between observed PS1 $r$ magnitudes and composite r band magnitudes for all our Kepler/K2 stars with $(g-r)<1$. Although there is a systematic offset between the magnitudes, the difference is small, showing that even without wavelength overlap between filters, $r_{com}$ is provides a close approximation of $r_{obs}$. We also observe a slight shift likely due to reddening where stars in C16 are offset from those in C04, with average extinctions of $E(g-r)=0.015$ and $0.15$, respectively. }
+    \label{fig:robs_vs_rcom}
+\end{figure}
+
+
+%\section{Kepler zeropoints}
+
+%With the methods outlined in the previous section, we can calculate the Kepler/K2 zeropoints for each channel in each campaign. 
+
+\section{Method consistency}
+
+With the two new methods to calculate Kepler magnitudes/zeropoints established it is crucial that we check their reliability and consistency. Since both methods are built from the same base of the Calspec spectral library and PS1 photometry, verifying them against other independent methods is needed. To do this we compare both methods against the existing Kepler magnitudes for sources in the Ecliptic Plane Catalogue, and synthetic photometry of sources derived from SDSS spectra.
+
+\subsection{Comparison to EPIC magnitudes}
+As part of the Kepler/K2 Ecliptic Plane Catalogue (EPIC), ref calculated Kepler magnitudes for each source according to Equations~\ref{eqn:epic}. These magnitudes rely on SDSS photometry for sources, whereas our two methods rely on PS1 photometry. \textbf{My old paper} used these EPIC magnitudes in conjunction with Everest light curves of sources to estimate the Kepler/K2 zeropoints for each channel. Although this analysis was consistent with past determinations of the Kepler/K2 zeropoints (see Fig. 1), it failed to account for source crowding, reddening, and relied on the SDSS formulation, while using PS1 photometry. 
+
+Since there are EPIC magnitudes for all Kepler/K2 sources we can compare the SLR and Com methods for sources that are available in each method. For each campaign we calculate the magnitude differences $\Delta SLR=Kp_{slr}-Kp_{epic}$, and $\Delta Com=Kp_{com}-Kp_{epic}$, such as seen in Fig.~\ref{fig:epic_comparison} for campaigns C04 and C16. Generally we find that all three methods are in close agreement, however, we do find that $Kp_{epic}$ is consistently brighter across all campaigns, with an average offset of $35_{-4}^{+9}$~mmag for SLR and $46_{-8}^{+4}$~mmag for Com. A strong correlation is also evident between the SLR and Com methods, this likely stems from both methods using the Calspec spectral library and PS1 photometry as the basis. 
+
+Comparing the three methods also gives us an opportunity to test the effect of reddening. We find that there is no significant difference between the high reddening fields, such as C04 (Fig.~\ref{fig:epic_comparison}, left), and low reddening fields, such as C16 (Fig.~\ref{fig:epic_comparison}, right). This suggests that no further corrections are needed to account for reddening.
+
+While comparing to EPIC magnitudes is valuable, these may not be the ``true" magnitudes of sources in the Kepler band. Systematic Differences, or offsets that are consistent between the two new methods presented here, such as $Kp_{epic}$ being consistently brighter may indicate biases in the EPIC catalogue.
+
+
+\begin{figure}
+\plottwo{epic_comparison4}{epic_comparison16}
+\caption{Comparison of the EPIC catalogue magnitudes to the Stellar Locus Regression (SLR) and PS1 linear combination (Com) magnitudes for stars observed in K2 that are satisfy our quality cut conditions. Despite the large differences between the average reddening in campaigns 4 and 16, they are in remarkable agreement. We find that the three independent methods for calculating $Kp$ are largely consistent, however, we consistently find that the EPIC magnitudes are consistently brighter across all campaigns with $Kp_{slr} - Kp_{epic} = 35_{-4}^{+9}$~mmag, and $Kp_{com} - Kp_{epic} = 46_{-8}^{+4}$~mmag. Comparison figures for all campaigns can be found here (link to github) \label{fig:epic_comparison}}
+\end{figure}
+
+\subsection{Synthetic photometry with SDSS sources}
+
+Another independent test we can conduct is to compare the SLR and Com derived magnitudes to synthetic Kepler magnitudes calculated from SDSS spectra. The SDSS spectra cover a wavelength range from 3800 to 9000~ $\rm \AA$, which fully covers the Kepler and PS1 gri bandpasses, as seen in Fig.~\ref{fig:sdss_spec}, making it an ideal independent test. Although SDSS has obtained spectra for \rr{LARGE NUMBER} sources it currently does not cover all Kepler/K2 sources. On average each K2 campaign only tens of sources with SDSS spectra. This limited sample size is not enough to cover each campaign and channel, however, it is sufficient to verify the consistency of the SLR and Com methods and compare them against the EPIC magnitudes.
+
+\begin{figure}
+    \plotone{sdss_spec_example.pdf}
+    \caption{SDSS spectra of Kepler/K2 source EPIC 202067392 (blue line), overlaid with the PS1 griz (dashed lines) and Kepler bandpasses (orange line). The SDSS spectra provide complete wavelength coverage for the Kepler band, making it an idea test spectral database.}
+    \label{fig:sdss_spec}
+\end{figure}
+
+We identify all sources with SDSS spectra with the \texttt{astroquery} SDSS API \textbf{ref}. Each SDSS spectra is smoothed by a 3rd order Savitzky-Golay filter fit across 51 wavelength bins and mangled with the \texttt{mangle\_spectrum2} routine from \texttt{snoopy} to the observed PS1 gri magnitudes for consistency. Since the spectra are already calibrated to SDSS photometry, the mangling process does not drastically change the spectra. The resulting spectra produce synthetic magnitudes that are $<1$~mmag different to the input photometry. 
+
+Although there are only 1741 sources with SDSS spectra across all campaigns, we further restrict the sample through strict quality cuts. We compare the synthetic magnitudes for each band to the observed magnitudes and remove all sources that fail a 3$\sigma$ clip for any of the comparisons. On the remaining 1260 sources, we then cut all sources where $g-r > 1$, since both the SLR and Com magnitude methods aren't well defined for red sources. This cut leaves us with a gold sample of 967 sources from the original 1741 sample. A list of these sources can be found on (link to csv or something).
+
+With the high quality sample of sources we can compare the synthetic Kepler photometry to the three magnitude systems. As seen in Fig.~\ref{fig:sdss_comparison} all 3 methods provide a close approximation to the SDSS magnitude, however, both methods explored here are more consistent, with lower spreads in the distribution of differences. Furthermore, the composite method, $Kp_{com}$, is nearly an order of magnitude closer to $Kp_{sdss}$ than the other two methods, reaching a mmag consistency. Another noticeable feature is the disassociation of the sources where $g-r<1$ and $g-r >1$ which is not present in the other methods. 
+
+This independent test has clearly shown that our methods are consistent. It is likely that the SLR method fails to achieve high precision due to systematic errors that arise from determining the extinction based on a limited sample of sources. Conversely, it is clear that the composite method provides a highly consistent magnitude estimate, that better represents magnitudes in the Kepler bandpass than the current EPIC catalogue magnitudes. From this analysis we will use $Kp_{com}$ to determine the zeropoints for the Kepler detectors. 
+
+
+
+\begin{figure}
+    \plotone{compare2sdss.pdf}
+    \caption{Comparison of Kepler magnitudes to the synthetic magnitudes calculated from SDSS spectra, the 16th, 50th and 84th percentiles for the $g-r<1$ distribution are shown. For consistency, we normalise the SDSS spectra to the PS1 $r$ band magnitude. Of the three methods the EPIC magnitudes are the least consistent, with the composite method providing an excellent match to SDSS within the mmag range.}
+    \label{fig:sdss_comparison}
+\end{figure}
+
+%As seen in Fig.~\ref{fig:mag_test} the SDSS synthetic magnitudes are a close match for the observed PS1 magnitudes and the calculated Kepler magnitude for sources in C16. Interestingly all bands are offset with the SDSS synthetic photometry slightly over estimating in all cases. This difference between the photometry is likely due to subtle calibration differences between the PS1 photometry and SDSS spectra, and noise present in the SDSS spectra. From this example we can clearly see that the stellar locus regression method for calculating zeropoints is broadly consistent with the independent method of calculating zeropoints through SDSS sources. 
+
+%\begin{figure}
+%\plotone{c16_sdss_everest_error.pdf}
+%\caption{Comparison of the observed PS1, and calibrated Kepler ab magnitudes to the synthetic SDSS magnitudes in the Kepler and PS1 gri bandpasses. All filters are slightly offset from the SDSS synthetic magnitude, however, the offset of the calculated Kepler ab magnitude is consistent with the PS1 offsets, so the stellar locus regression method appears consistent with this independent method \textbf{(don't know why there is a tail)}.  \label{fig:mag_test}}
+%\end{figure}
+
+\section{Kepler/K2 zeropoints}
+With the composite method discussed in \S~\ref{sec:composite}, we calculate the expected magnitudes for sources and alongside the system magnitude, $Kp_{sys}$, we can determine the zeropoint simply through:
+\begin{eqnarray}
+zp = Kp_{com} - Kp_{sys}.
+\end{eqnarray}
+For each channel we calculate the error weighted average, where outliers are removed with a $3\sigma$ clip. For reliable zeropoints we require that for every channel in a campaign that there are more than 10 sources that survive the quality cuts and have $g-r<0.8$. Due to these strict cuts some channels and campaigns do not meet the requirements and do not have zeropoints, such as all channels in C11.
+
+By breaking the zeropoints up between the channels and campaigns, we can explore how the zeropoint varies across the focal plane and across the lifetime of K2. 
+
+\subsection{Focal plane structure}
+The large Kepler FoV is divided into a series of 84 separate detectors. rh19 found that the zeropoints across these individual channels/detectors varies, here we examine how that variability relates to their positions on the focal plane.
+
+We reconstruct the Kepler focal plane arranging the zeropoint values according to the position of their corresponding channels. As seen in Fig.~\ref{fig:zp_fp} a clear structure in the zeropoints can be seen in both C01 and C18, where the zeropoint is decreases with increasing distance from the centre of the focal plane. Since the zeropoint characterises the efficiency of the detector, the radially decreasing  zeropoint can be interpreted as decreasing sensitivity with radius. \textbf{Is it useful to fit the trend?} 
+
+Alongside the overall trend there are individual detectors with either elevated or lowered zeropoints. Channels such as 22 and 67 consistently feature elevated zeropoints while channels 36, 37, 52, and 53 have uncharacteristically low zeropoints. We do not explore why these channels have anomalous zeropoints, however, it does emphasise the need to determine zeropoints per channel. 
+
+\begin{figure}
+    \plotone{c1zp_c18zp}
+    \caption{Zeropoints of the Kepler detector for Campaign 1 and 18 aligned with the focal plane. Zeropoints could not be calculated for blank channels as they contained $<10$ suitable sources.  A clear structure in the zeropoints can be seen where the zeropoints for channels/detectors near the centre of the focal plane have a higher value compared to the edges. This can be interpreted as a decreased efficiency for detectors near the edge. Alongside the general trend there are obvious outliers with either elevated or lowered zeropoints, such as channels 37, 52, and 67. There is also a marked decrease in the zeropoints from C01 to C18, we explore potential time evolution in \S~\ref{sec:time_evo}}
+    \label{fig:zp_fp}
+\end{figure}
+
+
+
+
+
+\subsection{Time evolution} \label{sec:time_evo}
+Form Kepler/K2 we have 9 years of data across 19 campaigns that are all reduced the same way with the Everest pipeline. This long time baseline gives us the opportunity to examine how the zeropoints change over time. As seen in Fig.~\ref{fig:zp_fp} the zeropoints derived from the last full campaign of data in C18 are noticeably lower than the zeropoints from the first full campaign C01. Intriguingly the differences between the zeropoints of C01 and C18 is similar for all channels, suggesting an overall change in instrument calibration.
+
+To explore if the difference is a function of time we compare the zeropoints from C01 to all other campaigns. In this analysis we exclude C00, C02, and C07, since all campaigns have zeropoints for only a few channels. For the remaining campaigns we calculate the weighted average of the zeropoint differences across all 84 channels. As seen in Fig.~\ref{fig:zp_evo} on average the C01 zeropoints are larger than zeropoints from all later campaigns. We fit the decline with a line the \texttt{astropy} \texttt{modelling} and \texttt{fitting} packages \textbf{refs}. The best fit using Least squares regression finds that the average zeropoint decreases according to $\Delta zp \approx -11~\rm mmag\; yr^{-1}$.
+
+
+
+\begin{figure}
+    \plotone{zp_time_evolution}
+    \caption{Average difference between C01 zeropoints and other campaigns. The zeropoint show a clear decreasing trend with a best fit value of $-11$~mmag yr$^{-1}$, indicating a steady loss of system efficiency over the 9 year K2 mission. \textbf{Is this loss from cosmic rays degrading the detectors, general detector wear, or something else?}}
+    \label{fig:zp_evo}
+\end{figure}
+
+
+\subsection{Average zeropoints}
+As with previous cases, we restrict our K2 source sample to 
+
+
+\begin{table*}
+\centering
+ \caption{Zeropoints for all \textit{Kepler/K2} detector channels. Channels with no values belong to the defunct modules 3, 4 and 7. The zerpoints are derived with data from Campaigns C01, C06, C12, C14, C16, and C17. }
+ \label{tab:zeropoints}
+ \begin{tabular}{lc|lc}
+  \hline
+  Channel (0-42) & Zeropoint (0-42) & Channel (43-84) & Zeropoint (43-84) \\
+  \hline
+  1 & $25.27\pm0.06$ & 43 & $25.35\pm0.04$ \\
+2 & $25.28\pm0.05$ & 44 & $25.31\pm0.05$ \\
+3 & $25.23\pm0.16$ & 45 & $25.31\pm0.05$ \\
+4 & $25.2\pm0.09$ & 46 & $25.31\pm0.04$ \\
+5 & $-$ & 47 & $25.3\pm0.04$ \\
+6 & $-$ & 48 & $25.28\pm0.05$ \\
+7 & $-$ & 49 & $25.27\pm0.05$ \\
+8 & $-$ & 50 & $25.26\pm0.05$ \\
+9 & $-$ & 51 & $25.19\pm0.04$ \\
+10 & $-$ & 52 & $25.2\pm0.07$ \\
+11 & $-$ & 53 & $25.29\pm0.04$ \\
+12 & $-$ & 54 & $25.28\pm0.05$ \\
+13 & $25.29\pm0.09$ & 55 & $25.31\pm0.07$ \\
+14 & $25.28\pm0.08$ & 56 & $25.26\pm0.07$ \\
+15 & $25.23\pm0.08$ & 57 & $25.35\pm0.05$ \\
+16 & $25.25\pm0.07$ & 58 & $25.36\pm0.04$ \\
+17 & $-$ & 59 & $25.35\pm0.05$ \\
+18 & $-$ & 60 & $25.33\pm0.05$ \\
+19 & $-$ & 61 & $25.32\pm0.04$ \\
+20 & $-$ & 62 & $25.3\pm0.04$ \\
+21 & $25.4\pm0.07$ & 63 & $25.33\pm0.04$ \\
+22 & $25.35\pm0.05$ & 64 & $25.3\pm0.04$ \\
+23 & $25.34\pm0.04$ & 65 & $25.32\pm0.07$ \\
+24 & $25.35\pm0.08$ & 66 & $25.38\pm0.05$ \\
+25 & $25.33\pm0.05$ & 67 & $25.32\pm0.04$ \\
+26 & $25.37\pm0.06$ & 68 & $25.35\pm0.09$ \\
+27 & $25.31\pm0.06$ & 69 & $25.32\pm0.04$ \\
+28 & $25.32\pm0.08$ & 70 & $25.33\pm0.05$ \\
+29 & $25.27\pm0.1$ & 71 & $25.26\pm0.04$ \\
+30 & $25.26\pm0.04$ & 72 & $25.23\pm0.04$ \\
+31 & $25.24\pm0.04$ & 73 & $25.28\pm0.03$ \\
+32 & $25.27\pm0.07$ & 74 & $25.32\pm0.04$ \\
+33 & $25.27\pm0.04$ & 75 & $25.25\pm0.03$ \\
+34 & $25.26\pm0.04$ & 76 & $25.27\pm0.05$ \\
+35 & $25.19\pm0.05$ & 77 & $25.26\pm0.05$ \\
+36 & $25.24\pm0.04$ & 78 & $25.25\pm0.04$ \\
+37 & $25.37\pm0.04$ & 79 & $25.27\pm0.05$ \\
+38 & $25.38\pm0.04$ & 80 & $25.24\pm0.03$ \\
+39 & $25.36\pm0.06$ & 81 & $25.26\pm0.06$ \\
+40 & $25.36\pm0.04$ & 82 & $25.26\pm0.05$ \\
+41 & $25.33\pm0.05$ & 83 & $25.27\pm0.06$ \\
+42 & $25.34\pm0.04$ & 84 & $25.26\pm0.05$ \\
+
+  \hline
+ \end{tabular}
+\end{table*}
+
+\subsection{Comparison to past work}
+
+
+\section{Conclusion}
+
+
+\appendix
+\section{Dust extinction}
+
+
+\begin{figure}
+\plotone{all_dust_hist.pdf}
+\caption{Dust extinction $a_v$ distributions for all Kpler/K2 campaigns. Campaigns C09, C10, and C19 did not have suitable data available at the time of analysis \textbf{multiply by 3.1 and fix spelling of occurrence}. \label{fig:all_dust_hist}}
+\end{figure}
+
+
+
+
+%% For this sample we use BibTeX plus aasjournals.bst to generate the
+%% the bibliography. The sample63.bib file was populated from ADS. To
+%% get the citations to show in the compiled file do the following:
+%%
+%% pdflatex sample63.tex
+%% bibtext sample63
+%% pdflatex sample63.tex
+%% pdflatex sample63.tex
+
+\bibliography{sample63}{}
+\bibliographystyle{aasjournal}
+
+%% This command is needed to show the entire author+affiliation list when
+%% the collaboration and author truncation commands are used.  It has to
+%% go at the end of the manuscript.
+%\allauthors
+
+%% Include this line if you are using the \added, \replaced, \deleted
+%% commands to see a summary list of all changes at the end of the article.
+%\listofchanges
+
+\end{document}
+
+% End of file `sample63.tex'.
