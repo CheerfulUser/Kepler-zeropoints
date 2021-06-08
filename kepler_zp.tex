@@ -407,32 +407,34 @@ We generate our stellar locus using source-synphot and the CALSPEC library. We a
 
 
 \subsubsection{Extinction}
-Calibrating sources close to the galactic plane introduces the added complexity of high levels of dust extinction, or reddening of sources. The reddening, $A$, changes the observed magnitude, $m$, in a band according to
+Calibrating sources close to the galactic plane introduces the added complexity of high levels of dust extinction, or reddening for sources. The reddening, $A_x$, changes the observed magnitude, $m$, in band $x$ according to
 \begin{eqnarray}
-m = m_{int} + A
+m = m_{int} + A_x
 \end{eqnarray}
 where $m_{int}$ is the intrinsic magnitude. The reddening in a band $x$ can also be represented as
 \begin{eqnarray}
 A_x = E(B-V)R_x
 \end{eqnarray}
-where $E(B-V)$ is the conventional extinction determined in the $B$ and $V$ bands, and $R_x$ is the extinction vector coefficient for a band.
+where $E(B-V)$ is the conventional extinction determined in the $B$ and $V$ bands, and $R_x$ is the extinction vector coefficient for band $x$.
 
 There are numerous methods for identifying extinction in a field, and in this work we consider two methods for determining extinction. The first method is data driven, using stellar locus regression on PS1 photometry, and the second utilises the 3D dust maps produced by Bayestar19 (B19 hereafter) (refs). 
 
-Before calculating extinctions for Kepler fields, we must fix a basis of extinction vector coefficients. We choose the normalisation of B19 to be our basis of extinction, so $A=B19R$. Schlafly 2011 presents a table of band coefficients for a range of filters, such as the PS1 $grizy$ which are compatible with the B19 output. To calculate how these coefficients apply to our Calspec basis and Kepler band we first calculate a conversion between between B19 and the conventional $E(B-V)$ by assuming that they are related by a constant such that $E(B-V)=\xi B19$ under the Fitzpatrick 99 extinction law. We calculate this constant by choosing HD074000 as representative Calspec spectrum, which has a spectral type of sdF6, $T_{eff}=7000$~K, and $g-r=-0.05$. 
+Before calculating extinctions for Kepler fields, we must fix a basis of extinction vector coefficients. 
+%We choose the normalisation of B19 to be our basis of extinction, so $A=B19R$. Schlafly 2011 presents a table of band coefficients for a range of filters, such as the PS1 $grizy$ which are compatible with the B19 output. To calculate how these coefficients apply to our Calspec basis and Kepler band we first calculate a conversion between between B19 and the conventional $E(B-V)$ by assuming that they are related by a constant such that $E(B-V)=\xi B19$ under the Fitzpatrick 99 extinction law. We calculate this constant by choosing HD074000 as representative Calspec spectrum, which has a spectral type of sdF6, $T_{eff}=7000$~K, and $g-r=-0.05$. 
 
-We fit the constant by calculating the synthetic $grizy$ magnitudes of HD074000 under no extinction and with $B19=1$. We apply the extinction to the spectrum using the \texttt{extinction} python package and the fitzpatrick99 model. With this setup the extinction vector coefficient is given by $R_x=m_e-m_0$. We then minimise the reduced $\Chi^2$ across all bands with the \texttt{scipy} optimize package using the Nedler-Mead method. From the fit we find $\xi = 1.02$, which has differences of only a few percent in each band \textbf{need to quantify}. 
+%We fit the constant by calculating the synthetic $grizy$ magnitudes of HD074000 under no extinction and with $B19=1$. We apply the extinction to the spectrum using the \texttt{extinction} python package and the fitzpatrick99 model. With this setup the extinction vector coefficient is given by $R_x=m_e-m_0$. We then minimise the reduced $\Chi^2$ across all bands with the \texttt{scipy} optimize package using the Nedler-Mead method. From the fit we find $\xi = 1.02$, which has differences of only a few percent in each band \textbf{need to quantify}. 
 
-With the conversion from $B19$ to $E(B-V)$ we can calculate $R$ for each band, however, $R$ varies with spectral type. If instead of choosing a representative spectrum we calculate $R_x$ for all Calspec sources with $g-r < 1$ we find a strong linear trend with colour in bands covering shorter wavelengths. We fit these trends with using the \texttt{scipy} curvefit module iterating the fit twice following $3\sigma$ clips on the data. The fits are shown in Fig.~\ref{fig:R_fits} where the extinction vector coeficients for PS1 $grizy$ and $Kepler$ are now functions of intrinsic colour defined by:
+%With the conversion from $B19$ to $E(B-V)$ we can calculate $R$ for each band, however, $R$ varies with spectral type. 
+If instead of choosing a representative spectrum we calculate $R_x$ for all Calspec sources with $g-r < 1$ we find a strong linear trend with colour in bands covering shorter wavelengths. We fit these trends with using the \texttt{scipy} curvefit module iterating the fit twice following $3\sigma$ clips on the data. The fits are shown in Fig.~\ref{fig:R_fits} where the extinction vector coeficients for PS1 $grizy$ and $Kepler$ are now functions of intrinsic colour defined by:
 \begin{eqnarray} 
-R_g=3.629-0.131(g-r)_{int},\label{eqn:vectors}\\
-R_r=2.611-0.053(g-r)_{int},\nonumber \\
-R_i=1.935-0.021(g-r)_{int},\nonumber\\
-R_z=1.525-0.008(g-r)_{int},\nonumber\\
-R_y=1.274-0.006(g-r)_{int},\nonumber\\
-R_{Kp}=2.557-0.395(g-r)_{int}.\nonumber
+R_g&=&3.616-0.088(g-r)_{int},\label{eqn:vectors}\\
+R_r&=&2.586-0.033(g-r)_{int},\nonumber \\
+R_i&=&1.910-0.013(g-r)_{int},\nonumber\\
+R_z&=&1.502-0.005(g-r)_{int},\nonumber\\
+R_y&=&1.254-0.003(g-r)_{int},\nonumber\\
+R_{Kp}&=&2.687-0.269(g-r)_{int}.\nonumber
 \end{eqnarray}
-For simplicity we take the fiducial value $R_{x,0}$ to be $R_x$ evaluated at $(g-r)_{int}=0$. Although $R_x$ now depends on the intrinsic colour strictly making extinction correction a recursive process, since these sources are on the stellar locus, extinction acts primarily to shift sources along $g-r$, so the intrinsic colour can be sufficiently approximated by $(g-r)_int\approx B19(g-r)$. Overall, since the extinction is small, this colour correction to $R_x$ is negligible. With this fixed basis of extinction vector coefficients we can now explore the extinction present in the \textit{Kepler/K2} fields.
+For simplicity we take the fiducial value $R_{x,0}$ to be $R_x$ evaluated at $(g-r)_{int}=0$. This method  $R_x$ now depends on the intrinsic colour strictly making this extinction correction method a recursive process, since these sources are on the stellar locus, extinction acts primarily to shift sources along $g-r$, so the intrinsic colour can be sufficiently approximated by $(g-r)_int\approx B19(g-r)$. Overall, since the extinction is small, this colour correction to $R_x$ is negligible. With this fixed basis of extinction vector coefficients we can now explore the extinction present in the \textit{Kepler/K2} fields.
 
 
 
@@ -452,7 +454,7 @@ We found that this conversion was offset by $\sim$0.1 magnitudes for an extincti
 Schafly 2011 presents the extinction coefficients for the PS1 filters, but not for Kepler. We determine the extinction coefficient for Kepler to be 2.431, by taking the average of the magnitude differences between CALSPEC spectra at $E(B-V)=0$, and $E(B-V)=1$. Likewise, we calculate the extinction coefficient for TESS to be 1.809. The $E(g-r)$ extinction coefficients for Kepler and TESS are also shown in Table~\ref{tab:ext_coeff}.
 
 \begin{deluxetable*}{ccccccc}
-\tablecaption{Extinction vector coefficients $R$  for the PS1 $grizy$ and $Kepler$ bands. Here we show the Schlafly 2011 coefficients and our recalculated evaluated at $(g-r)_{int}=0$ with the error in the last value in brackets. Although there is a discrepancy between the values, another choice of $(g-r)_{int}$ brings the values into closer alignment according to Eqs~\ref{eqn:vectors}}
+\tablecaption{Extinction vector coefficients $R$  for the PS1 $grizy$ and $Kepler$ bands. Here we show the Schlafly 2011 coefficients and our recalculated evaluated at $(g-r)_{int}=0$ with the error in the last value in brackets. Although there is a discrepancy between the values, another choice of $(g-r)_{int}$ brings the values into closer alignment according to Eqs.~\ref{eqn:vectors}}
 \tablecolumns{7}
 \tablehead{
 &\colhead{g} & \colhead{r} & \colhead{i} & 
@@ -468,7 +470,7 @@ With extinction coefficients in each band, we can calculate the extinction prese
 
 \begin{figure}
 \plotone{R_all_fits.pdf}
-\caption{Colour vector coefficients $R$ for the PS1 $grizy$ and $Kepler$ bands. Although $R$ varies with spectral type across the Calspec sources with $(g-r)_{int} < 1$ we find that the variation is largely linear. For simplicity we take $R$ evaluated at ${(g-r)_{int} =0}$ to be the primary value for each band, where the full corrected value is given by the displayed equations. For red bands there is little change across the colour range, however, bands with blue components like PS1 $g$ and $Kepler$ show significant change. \label{fig:R_fits}}
+\caption{Colour vector coefficients $R$ for the PS1 $grizy$ and $Kepler$ bands. Although $R$ varies with spectral type across the Calspec sources with $(g-r)_{int} < 1$ we find that the variation is largely linear, and agrees closely with the PS1 coefficeints described in \textbf{Tonry PS1}. For simplicity we take $R$ evaluated at ${(g-r)_{int} =0}$ to be the primary value for each band, where the full corrected value is given by the displayed equations. For red bands there is little change across the colour range, however, bands with blue components like PS1 $g$ and $Kepler$ show significant change. \label{fig:R_fits}}
 \end{figure}
 
 \begin{figure}
